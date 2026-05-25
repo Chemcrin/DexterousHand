@@ -1,0 +1,98 @@
+# ===== 环境变量 & 密钥文件 =====
+.env
+.env.*
+*.env
+env.*
+env/
+secrets.*
+*.secret
+secret.*
+*.key
+*.pem
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.token
+credentials.*
+*_credentials*
+*_secret*
+api_key*
+*api_key*
+apikey*
+*apikey*
+key.json
+service-account.json
+
+# ===== 密码 & Token 文件 =====
+*.password
+password*
+token.*
+*token*
+
+# ===== IDE & 编辑器 =====
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ===== 操作系统 =====
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+*.whl
+
+# ===== 日志 & 临时文件 =====
+*.log
+logs/
+temp/
+tmp/
+*.tmp
+*.bak
+*.backup
+*.cache
+
+# ===== 依赖 & 包 =====
+node_modules/
+vendor/
+
+# ===== 虚拟环境 =====
+venv/
+.venv/
+.conda/
+
+# ===== Jupyter =====
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ===== 测试 & 覆盖率 =====
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+.pytest*
+
+# ===== Matplotlib =====
+*.png.bak
+*.svg.bak
+*.pdf.bak
+
+# ===== 仿真输出 =====
+output/
+figures/
+*.gif
+*.mp4
