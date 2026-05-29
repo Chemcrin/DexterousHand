@@ -18,6 +18,13 @@ Keyboard controls in the animation window:
     space   pause / resume
     r       reset to open hand
     q/esc   quit
+
+Made By ChemCrin & StaRacy in 5.29 
+
+This program uses the MIT license
+PLZ indicate the source when quote
+Give me a star in github if you like it.
+
 """
 
 from __future__ import annotations
@@ -223,6 +230,11 @@ ASCII_ACTION_NAMES = {
     "手指依次屈伸": "Finger Wave",
     "拇指对掌运动": "Thumb Opposition",
     "挥手动作": "Wave",
+    "问手": "Wen Sau (Asking Hand)",
+    "膀手": "Bong Sau (Wing Arm)",
+    "日字冲拳": "Sun Character Punch",
+    "标指": "Biu Jee (Thrusting Fingers)",
+    "伏手": "Fuk Sau (Subduing Hand)",
 }
 
 _UNCONFIGURED_FONT = object()
@@ -934,6 +946,91 @@ def pose_wave_phase(phase: float) -> AngleDict:
     return clamp_angles(angles)
 
 
+
+# =============================================================================
+# 5b. Wing Chun (咏春) pose definitions
+# =============================================================================
+
+
+def pose_wen_sau() -> AngleDict:
+    """Wen Sau (问手/Asking Hand) — palm open and slightly upward."""
+    angles = neutral_angles()
+    angles["root"]["wrist_flex_ext"] = 15.0
+    angles["root"]["forearm_prono_supination"] = 10.0
+    angles["thumb"]["cmc_abd_add"] = 25.0
+    angles["thumb"]["mcp_flex"] = 10.0
+    angles["thumb"]["ip_flex"] = 5.0
+    set_four_finger_curl(angles, "index", mcp=5.0, pip=0.0, dip=0.0, abd=-2.0)
+    set_four_finger_curl(angles, "middle", mcp=5.0, pip=0.0, dip=0.0, abd=0.0)
+    set_four_finger_curl(angles, "ring", mcp=8.0, pip=0.0, dip=0.0, abd=2.0)
+    set_four_finger_curl(angles, "little", mcp=10.0, pip=0.0, dip=0.0, abd=5.0)
+    return clamp_angles(angles)
+
+
+def pose_bong_sau() -> AngleDict:
+    """Bong Sau (膀手/Wing Arm) — wrist externally rotated, palm facing out."""
+    angles = neutral_angles()
+    angles["root"]["wrist_flex_ext"] = 30.0
+    angles["root"]["wrist_radial_ulnar"] = -15.0
+    angles["root"]["forearm_prono_supination"] = 40.0
+    angles["thumb"]["cmc_abd_add"] = 30.0
+    angles["thumb"]["cmc_flex"] = 5.0
+    angles["index"]["mcp_abd_add"] = 5.0
+    set_four_finger_curl(angles, "index", mcp=10.0, pip=0.0, dip=0.0, abd=5.0)
+    set_four_finger_curl(angles, "middle", mcp=10.0, pip=0.0, dip=0.0, abd=0.0)
+    set_four_finger_curl(angles, "ring", mcp=12.0, pip=0.0, dip=0.0, abd=2.0)
+    set_four_finger_curl(angles, "little", mcp=15.0, pip=0.0, dip=0.0, abd=5.0)
+    return clamp_angles(angles)
+
+
+def pose_wing_chun_punch() -> AngleDict:
+    """Sun Character Punch (日字冲拳) — full fist with slight wrist extension."""
+    angles = neutral_angles()
+    angles["root"]["wrist_flex_ext"] = -5.0
+    angles["root"]["forearm_prono_supination"] = 5.0
+    angles["thumb"].update({
+        "cmc_abd_add": -10.0,
+        "cmc_flex": 30.0,
+        "cmc_axial_rot": 20.0,
+        "mcp_flex": 40.0,
+        "ip_flex": 30.0,
+    })
+    curl_four_fingers(angles, mcp=80.0, pip=100.0, dip=70.0)
+    angles["index"]["mcp_abd_add"] = -2.0
+    angles["little"]["mcp_abd_add"] = 2.0
+    return clamp_angles(angles)
+
+
+def pose_biu_jee() -> AngleDict:
+    """Biu Jee (标指/Thrusting Fingers) — fingers extended and adducted."""
+    angles = neutral_angles()
+    angles["root"]["wrist_flex_ext"] = 10.0
+    for f in FOUR_FINGER_NAMES:
+        set_four_finger_curl(angles, f, mcp=0.0, pip=0.0, dip=0.0, abd=-3.0)
+    angles["thumb"].update({
+        "cmc_abd_add": 5.0,
+        "cmc_flex": 20.0,
+        "mcp_flex": 30.0,
+        "ip_flex": 20.0,
+    })
+    return clamp_angles(angles)
+
+
+def pose_fuk_sau() -> AngleDict:
+    """Fuk Sau (伏手/Subduing Hand) — palm down, wrist flexed to press."""
+    angles = neutral_angles()
+    angles["root"]["wrist_flex_ext"] = -20.0
+    angles["root"]["forearm_prono_supination"] = -10.0
+    angles["thumb"]["cmc_abd_add"] = 20.0
+    angles["thumb"]["mcp_flex"] = 15.0
+    set_four_finger_curl(angles, "index", mcp=15.0, pip=0.0, dip=0.0, abd=-2.0)
+    set_four_finger_curl(angles, "middle", mcp=15.0, pip=0.0, dip=0.0, abd=0.0)
+    set_four_finger_curl(angles, "ring", mcp=18.0, pip=0.0, dip=0.0, abd=2.0)
+    set_four_finger_curl(angles, "little", mcp=20.0, pip=0.0, dip=0.0, abd=5.0)
+    return clamp_angles(angles)
+
+
+
 POSE_LIBRARY: Dict[str, PoseFn] = {
     "摊开手掌": pose_open,
     "OK手势": pose_ok,
@@ -946,6 +1043,11 @@ POSE_LIBRARY: Dict[str, PoseFn] = {
     "数字5": pose_number_5,
     "竖小拇指": pose_little_up,
     "半握拳": pose_half_fist,
+    "问手": pose_wen_sau,
+    "膀手": pose_bong_sau,
+    "日字冲拳": pose_wing_chun_punch,
+    "标指": pose_biu_jee,
+    "伏手": pose_fuk_sau,
 }
 
 PHASE_POSE_LIBRARY: Dict[str, PhasePoseFn] = {
@@ -1375,3 +1477,4 @@ def main(argv: Iterable[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
